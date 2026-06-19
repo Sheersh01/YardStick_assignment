@@ -1,6 +1,5 @@
 import React from 'react';
 import type { ChatMessage } from 'shared/types';
-import { Bot, User } from 'lucide-react';
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -12,19 +11,33 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
 
   if (isSystem) {
     return (
-      <div className="flex justify-center my-1 text-xs text-gray-500 bg-gray-50 px-3 py-1 rounded-full w-fit mx-auto border border-gray-200">
+      <div className="flex justify-center my-2 text-xs font-medium text-[#9FADBC] bg-[#2C333A] px-3 py-1 border border-[#38414A] rounded-md shadow-sm">
         {message.content}
       </div>
     );
   }
 
+  const renderText = (text: string) => {
+    // Basic parser for **bold** and `code`
+    const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={index} className="text-[#FFFFFF]">{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith('`') && part.endsWith('`')) {
+        return <code key={index} className="bg-[#1D2125] text-[#579DFF] px-1 py-0.5 rounded text-xs font-mono">{part.slice(1, -1)}</code>;
+      }
+      return <span key={index}>{part}</span>;
+    });
+  };
+
   return (
-    <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isUser ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'}`}>
-        {isUser ? <User size={16} /> : <Bot size={16} />}
-      </div>
-      <div className={`max-w-[80%] rounded-2xl px-4 py-2 ${isUser ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-gray-100 text-gray-800 rounded-tl-none'}`}>
-        <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+    <div className={`flex flex-col gap-1 w-full ${isUser ? 'items-end' : 'items-start'}`}>
+      <span className="text-[11px] font-medium uppercase text-[#9FADBC] px-1">
+        {isUser ? 'USER' : 'AGENT'}
+      </span>
+      <div className={`max-w-[85%] px-4 py-3 rounded-xl shadow-sm ${isUser ? 'bg-[#1C2B41] text-[#B6C2CF]' : 'bg-[#2C333A] text-[#B6C2CF] border border-[#38414A]'}`}>
+        <p className="text-sm whitespace-pre-wrap leading-relaxed">{renderText(message.content)}</p>
       </div>
     </div>
   );

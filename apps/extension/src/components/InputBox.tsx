@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Send } from 'lucide-react';
 
 interface InputBoxProps {
   onSend: (text: string) => void;
@@ -22,15 +21,15 @@ export default function InputBox({ onSend }: InputBoxProps) {
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Ask Copilot..."
-        className="flex-1 rounded-full px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm text-gray-900 placeholder-gray-400 bg-white"
+        placeholder="Ask Yardstick..."
+        className="flex-1 px-4 py-2 focus:outline-none text-sm text-[#B6C2CF] placeholder-[#9FADBC] bg-[#22272B] border border-[#38414A] rounded-md focus:border-[#579DFF]"
       />
       <button
         type="submit"
         disabled={!text.trim()}
-        className="p-2 rounded-full bg-blue-600 text-white disabled:bg-gray-100 disabled:text-gray-400 hover:bg-blue-700 transition-colors"
+        className="px-4 py-2 bg-[#579DFF] text-[#1D2125] disabled:bg-[#2C333A] disabled:text-[#9FADBC] hover:bg-[#85B8FF] transition-colors rounded-md text-sm font-semibold"
       >
-        <Send size={18} />
+        Submit
       </button>
     </form>
   );

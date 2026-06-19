@@ -40,23 +40,28 @@ export async function sendChatMessage(
       }
 
       if (chunk) {
+        let data;
         try {
-          const data = JSON.parse(chunk);
-          if (data.type === 'message') {
-            onChunk(data.content);
-          } else if (data.type === 'tool_call') {
-            // Execute the tool in the browser context
-            const result = await onToolCall(data.name, data.args);
-            
-            // Post result back to backend
-            await fetch(`http://localhost:3000/chat/result/${data.callId}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(result),
-            });
-          }
+          data = JSON.parse(chunk);
         } catch (e) {
           console.error('Error parsing SSE chunk:', e, chunk);
+          continue;
+        }
+
+        if (data.type === 'message') {
+          onChunk(data.content);
+        } else if (data.type === 'tool_call') {
+          // Execute the tool in the browser context
+          const result = await onToolCall(data.name, data.args);
+          
+          // Post result back to backend
+          await fetch(`http://localhost:3000/chat/result/${data.callId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(result),
+          });
+        } else if (data.type === 'error') {
+          throw new Error(data.content);
         }
       }
     }
