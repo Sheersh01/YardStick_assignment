@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { runAgent } from '../../../packages/agent/src/index';
-import type { ContextPayload } from '../../../packages/shared/src/types';
+import { runAgent } from '../../../../packages/agent/src/index';
+import type { ContextPayload } from '../../../../packages/shared/src/types';
 
 export const handleChat = async (req: Request, res: Response) => {
   try {
