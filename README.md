@@ -12,7 +12,7 @@ This project demonstrates the ability to inject custom React UIs into existing S
 ## Architectural Decisions & Future Scope 🔮
 
 ### Why Groq instead of OpenAI?
-Although the assignment specifies using the OpenAI Agents SDK, this implementation utilizes the standard `openai` SDK but points the `baseURL` to **Groq** using the `llama3-8b-8192` model. 
+Although the assignment specifies using the OpenAI Agents SDK, this implementation utilizes the standard `openai` SDK but points the `baseURL` to **Groq** using the `llama-3.1-8b-instant` model. 
 * **The Reason:** Modern SaaS applications like Trello have massive DOM payloads and context sizes. Processing this context rapidly exhausts standard free-tier limits. Groq provides a highly generous free tier (30,000 Tokens Per Minute) with lightning-fast inference, allowing the agent to function reliably end-to-end without requiring the reviewer to supply a paid OpenAI API key.
 * **Future Scope:** Because the entire architecture strictly adheres to the OpenAI SDK schema and Tool Calling formats, swapping to a true OpenAI model (like `gpt-4o`) in a production environment requires changing exactly one line of code (the `baseURL`). Additionally, for extreme context windows (1M+ tokens), the agent could easily be migrated to the Google GenAI SDK (Gemini).
 
