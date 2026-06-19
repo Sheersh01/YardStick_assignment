@@ -55,7 +55,7 @@ export async function sendChatMessage(
           const result = await onToolCall(data.name, data.args);
           
           // Post result back to backend
-          await fetch(`http://localhost:3000/chat/result/${data.callId}`, {
+          await fetch(`${BACKEND_URL}/chat/result/${data.callId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(result),
