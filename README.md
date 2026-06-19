@@ -1,5 +1,7 @@
 # Universal SaaS Copilot — Yardstick Internship Assignment
 
+[**▶️ Watch the Demo Video**](https://drive.google.com/file/d/1PWejK1ulTxQJW4deobSn_RSHjL661_Wu/view?usp=sharing)
+
 A Manifest V3 Chrome Extension and Agentic Backend that injects a natural-language AI Copilot into Trello. Built for the Yardstick Fullstack Developer Intern assignment.
 
 This project demonstrates the ability to inject custom React UIs into existing SaaS applications, manage complex state, connect to a streaming AI agent backend, dynamically learn SaaS capabilities via HAR file parsing, and execute actions on behalf of the user using native session auth.
@@ -48,6 +50,7 @@ Start the backend development server (runs on `http://localhost:3000`):
 ```bash
 npm run dev -w apps/backend
 ```
+> **Note:** The root backend URL (`/`) currently does not work. Please use `/health` to verify the backend is running.
 
 ## Production Deployment (Vercel) 🌐
 
