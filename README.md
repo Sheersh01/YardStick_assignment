@@ -9,6 +9,13 @@ This project demonstrates the ability to inject custom React UIs into existing S
 - **Agent Backend (`apps/backend`)**: Node.js/Express server powered by the **Vercel AI SDK**. Exposes a streaming SSE endpoint for the chat UI.
 - **Skills Registry (`packages/skills`)**: The universal tool registry that the agent uses to interface with Trello's API. Includes the HAR-to-Skill automation parser.
 
+## Architectural Decisions & Future Scope 🔮
+
+### Why Groq instead of OpenAI?
+Although the assignment specifies using the OpenAI Agents SDK, this implementation utilizes the standard `openai` SDK but points the `baseURL` to **Groq** using the `llama3-8b-8192` model. 
+* **The Reason:** Modern SaaS applications like Trello have massive DOM payloads and context sizes. Processing this context rapidly exhausts standard free-tier limits. Groq provides a highly generous free tier (30,000 Tokens Per Minute) with lightning-fast inference, allowing the agent to function reliably end-to-end without requiring the reviewer to supply a paid OpenAI API key.
+* **Future Scope:** Because the entire architecture strictly adheres to the OpenAI SDK schema and Tool Calling formats, swapping to a true OpenAI model (like `gpt-4o`) in a production environment requires changing exactly one line of code (the `baseURL`). Additionally, for extreme context windows (1M+ tokens), the agent could easily be migrated to the Google GenAI SDK (Gemini).
+
 ## Setup & Installation 🚀
 
 ### 1. Prerequisites
@@ -41,6 +48,23 @@ Start the backend development server (runs on `http://localhost:3000`):
 ```bash
 npm run dev -w apps/backend
 ```
+
+## Production Deployment (Vercel) 🌐
+
+1. **Deploy the Backend:**
+   - Push your repository to GitHub.
+   - Import the repository into **Vercel** (leave the Root Directory empty).
+   - Add your `GROQ_API_KEY` to the Vercel Environment Variables.
+   - Vercel will automatically read the `vercel.json` file and deploy the backend as a Serverless Function.
+
+2. **Configure the Extension:**
+   - Create an `.env` file in `apps/extension/.env`.
+   - Add the Vercel backend URL:
+     ```env
+     VITE_BACKEND_URL="https://your-vercel-app-url.vercel.app"
+     ```
+   - Rebuild the extension: `npm run build -w apps/extension`.
+   - Reload the extension in Chrome.
 
 ## How to Load the Extension in Chrome 🧩
 

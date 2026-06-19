@@ -11,15 +11,15 @@ export default function App() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 p-4 bg-[#579DFF] text-[#1D2125] shadow-xl hover:bg-[#85B8FF] transition-all z-[9999] rounded-xl"
+          className="fixed bottom-6 right-6 p-4 bg-[#0055CC] text-white shadow-xl hover:bg-[#004BB5] transition-all z-[9999] rounded-full"
         >
           <Square size={20} className="fill-current" />
         </button>
       )}
 
-      {/* Sidebar Overlay */}
+      {/* Floating Chat Widget */}
       {isOpen && (
-        <div className="fixed top-0 right-0 w-[400px] h-screen bg-[#22272B] shadow-2xl flex flex-col z-[9999] border-l border-[#38414A]">
+        <div className="fixed bottom-6 right-6 w-[380px] h-[600px] max-h-[calc(100vh-48px)] bg-[#1F1F21] shadow-2xl flex flex-col z-[9999] border border-[#38414A] rounded-xl overflow-hidden">
           <ChatWindow onClose={() => setIsOpen(false)} />
         </div>
       )}

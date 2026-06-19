@@ -93,11 +93,11 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#22272B] relative">
+    <div className="flex flex-col h-full bg-[#1F1F21] relative">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-[#38414A] bg-[#1D2125] shrink-0 text-[#B6C2CF]">
+      <div className="flex items-center justify-between p-4 border-b border-[#38414A] bg-[#1F1F21] shrink-0 text-[#B6C2CF]">
         <div className="flex items-center gap-3">
-          <Square className="text-[#579DFF] fill-current" size={16} />
+          <Square className="text-[#0055CC] fill-current" size={16} />
           <h2 className="font-semibold text-[#FFFFFF] text-sm">Yardstick Agent</h2>
         </div>
         <div className="flex items-center gap-2">
@@ -135,7 +135,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
         )}
         <div ref={messagesEndRef} />
       </div>
-      <div className="border-t border-[#38414A] p-4 bg-[#1D2125] shrink-0">
+      <div className="border-t border-[#38414A] p-4 bg-[#1F1F21] shrink-0">
         <InputBox onSend={handleSendMessage} />
       </div>
     </div>

@@ -59,21 +59,49 @@ export async function runAgent(
   let isComplete = false;
 
   while (!isComplete) {
-    const response = await openai.chat.completions.create({
-      model: 'qwen/qwen3-32b',
+    const stream = await openai.chat.completions.create({
+      model: 'llama3-8b-8192',
       messages,
       tools: allTools as any,
       tool_choice: 'auto',
-      stream: false, // For simplicity in this demo, but the assignment mentions "Responses must stream token-by-token."
-      // I'll update it to stream later if needed, or we can stream the tool executions first.
+      stream: true,
     });
 
-    const msg = response.choices[0].message;
-    messages.push(msg);
+    let fullContent = '';
+    const toolCallsMap: Record<number, any> = {};
 
-    if (msg.content) {
-      onStreamContent(msg.content);
+    for await (const chunk of stream) {
+      const delta = chunk.choices[0]?.delta;
+      if (!delta) continue;
+
+      if (delta.content) {
+        fullContent += delta.content;
+        onStreamContent(delta.content); // Stream token-by-token directly to UI
+      }
+
+      if (delta.tool_calls) {
+        for (const tc of delta.tool_calls) {
+          if (!toolCallsMap[tc.index]) {
+            toolCallsMap[tc.index] = {
+              id: tc.id,
+              type: 'function',
+              function: { name: tc.function?.name || '', arguments: '' }
+            };
+          }
+          if (tc.function?.arguments) {
+            toolCallsMap[tc.index].function.arguments += tc.function.arguments;
+          }
+        }
+      }
     }
+
+    const tool_calls = Object.values(toolCallsMap).length > 0 ? Object.values(toolCallsMap) : undefined;
+    
+    const msg: any = { role: 'assistant' };
+    if (fullContent) msg.content = fullContent;
+    if (tool_calls) msg.tool_calls = tool_calls;
+    
+    messages.push(msg);
 
     if (msg.tool_calls && msg.tool_calls.length > 0) {
       for (const toolCall of msg.tool_calls) {
