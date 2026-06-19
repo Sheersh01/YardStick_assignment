@@ -1,4 +1,4 @@
-import type { ToolDefinition } from 'shared/types';
+import type { ToolDefinition } from '../../shared/src/types';
 
 class SkillRegistry {
   private skills: Map<string, ToolDefinition> = new Map();

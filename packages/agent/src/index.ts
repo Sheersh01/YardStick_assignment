@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
-import { registry } from 'skills/skill-registry';
-import type { ContextPayload } from 'shared/types';
+import { registry } from '../../skills/src/skill-registry';
+import type { ContextPayload } from '../../shared/src/types';
 
 const openai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
