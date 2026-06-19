@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "paths": {
+      "shared": ["../../packages/shared/src/index.ts"],
+      "shared/*": ["../../packages/shared/src/*"],
+      "agent": ["../../packages/agent/src/index.ts"],
+      "agent/*": ["../../packages/agent/src/*"],
+      "skills": ["../../packages/skills/src/index.ts"],
+      "skills/*": ["../../packages/skills/src/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}

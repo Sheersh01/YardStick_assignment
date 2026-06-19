@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: yardstick-copilot-backend
+    env: node
+    buildCommand: npm install && cd apps/backend && npm install
+    startCommand: cd apps/backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: GROQ_API_KEY
+        sync: false # Set this securely in the Render Dashboard

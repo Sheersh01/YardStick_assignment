@@ -1,0 +1,51 @@
+[
+  {
+    "id": "auto-skill-1",
+    "name": "post_cards",
+    "description": "Automatically generated skill for /1/cards",
+    "endpoint": "/1/cards",
+    "method": "POST",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "idList": {
+          "type": "string",
+          "description": "Parameter idList"
+        },
+        "name": {
+          "type": "string",
+          "description": "Parameter name"
+        },
+        "due": {
+          "type": "object",
+          "description": "Parameter due"
+        },
+        "closed": {
+          "type": "boolean",
+          "description": "Parameter closed"
+        },
+        "isTemplate": {
+          "type": "boolean",
+          "description": "Parameter isTemplate"
+        },
+        "pos": {
+          "type": "number",
+          "description": "Parameter pos"
+        },
+        "cardRole": {
+          "type": "object",
+          "description": "Parameter cardRole"
+        },
+        "dueComplete": {
+          "type": "boolean",
+          "description": "Parameter dueComplete"
+        },
+        "dsc": {
+          "type": "string",
+          "description": "Parameter dsc"
+        }
+      },
+      "required": []
+    }
+  }
+]

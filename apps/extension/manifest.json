@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Universal SaaS Copilot",
+  "version": "1.0.0",
+  "description": "An AI agent that learns SaaS actions from HAR captures and executes workflows.",
+  "permissions": ["activeTab", "scripting", "storage", "cookies"],
+  "host_permissions": ["*://trello.com/*", "*://*.trello.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://trello.com/*", "*://*.trello.com/*"],
+      "js": ["src/content/inject.tsx"]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background/background.ts",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Universal SaaS Copilot"
+  }
+}
