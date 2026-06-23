@@ -79,14 +79,13 @@ registry.register({
   id: 'skill-4',
   name: 'createList',
   description: 'Create a new list on the current board.',
-  endpoint: '/1/lists',
+  endpoint: '/1/boards/{boardId}/lists',
   method: 'POST',
   parameters: {
     type: 'object',
     properties: {
       name: { type: 'string', description: 'Name of the new list' },
-      idBoard: { type: 'string', description: 'ID of the board to create the list on. Hint: use the boardId from getCurrentBoardLists or URL.' },
     },
-    required: ['name', 'idBoard'],
+    required: ['name'],
   },
 });

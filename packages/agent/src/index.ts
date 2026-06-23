@@ -2,9 +2,13 @@ import OpenAI from 'openai';
 import { registry } from '../../skills/src/skill-registry';
 import type { ContextPayload } from '../../shared/src/types';
 
+const useGemini = !!process.env.GEMINI_API_KEY;
+
 const openai = new OpenAI({
-  apiKey: process.env.GROQ_API_KEY,
-  baseURL: 'https://api.groq.com/openai/v1',
+  apiKey: process.env.GEMINI_API_KEY || process.env.GROQ_API_KEY,
+  baseURL: useGemini 
+    ? 'https://generativelanguage.googleapis.com/v1beta/openai/' 
+    : 'https://api.groq.com/openai/v1',
 });
 
 const SYSTEM_PROMPT = `You are a Universal SaaS Copilot operating inside Trello.
@@ -60,7 +64,7 @@ export async function runAgent(
 
   while (!isComplete) {
     const stream = await openai.chat.completions.create({
-      model: 'llama-3.1-8b-instant',
+      model: useGemini ? 'gemini-2.5-flash' : 'llama-3.1-8b-instant',
       messages,
       tools: allTools as any,
       tool_choice: 'auto',
